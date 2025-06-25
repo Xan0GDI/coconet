@@ -1,0 +1,233 @@
+/* --- General Setup & Theming --- */
+:root {
+    --primary-bg: #0a0a0a;
+    --secondary-bg: #1a1a1a;
+    --primary-text: #e0e0e0;
+    --accent-color: #8B0000; /* Dark Red */
+    --accent-hover: #a11a1a;
+    --border-color: #333;
+}
+
+html {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+html::-webkit-scrollbar { 
+    display: none;  /* Older Safari and Chromium */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevents horizontal scrollbar from animation */
+}
+
+/* --- Animated Background --- */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-animation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(139, 0, 0, 0.2), transparent 70%);
+    opacity: 0.5;
+}
+
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.background-animation span {
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 20vmin;
+    backface-visibility: hidden;
+    position: absolute;
+    animation: move;
+    animation-duration: 45s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    mix-blend-mode: screen;
+}
+
+/* Generate multiple shapes with different properties */
+.background-animation span:nth-child(1) {
+    color: var(--accent-color);
+    top: 50%;
+    left: 10%;
+    animation-duration: 50s;
+    animation-delay: -1s;
+    transform-origin: -1vw 22vh;
+    box-shadow: -40vmin 0 5.5vmin currentColor;
+}
+.background-animation span:nth-child(2) {
+    color: var(--accent-hover);
+    top: 80%;
+    left: 70%;
+    animation-duration: 42s;
+    animation-delay: -5s;
+    transform-origin: 15vw -10vh;
+    box-shadow: 40vmin 0 5.2vmin currentColor;
+}
+.background-animation span:nth-child(3) {
+    color: var(--accent-color);
+    top: 20%;
+    left: 90%;
+    animation-duration: 55s;
+    animation-delay: -8s;
+    transform-origin: -5vw 10vh;
+    box-shadow: -40vmin 0 5.8vmin currentColor;
+}
+.background-animation span:nth-child(4) {
+    color: var(--accent-hover);
+    top: 5%;
+    left: 40%;
+    animation-duration: 48s;
+    animation-delay: -12s;
+    transform-origin: 20vw 5vh;
+    box-shadow: 40vmin 0 5.1vmin currentColor;
+}
+
+
+/* --- Header & Logo --- */
+.site-header {
+    padding: 1rem 2rem;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+.site-header h1 {
+    font-size: 2rem;
+    color: var(--primary-text);
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+/* --- Main Content & Avatar Grid --- */
+.content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Made cards smaller */
+    gap: 2rem;
+    justify-items: center;
+    /* align-items: start; is removed so all cards in a row have the same height */
+}
+
+.avatar-card {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    padding: 1.5rem; /* Adjusted padding for smaller card size */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    width: 100%; /* Ensures card fills the grid column */
+}
+
+.avatar-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.avatar-image {
+    width: 100%;
+    height: 220px; /* Set a fixed height to create uniform card sizes */
+    border-radius: 8px;
+    object-fit: contain; /* This fits the whole image without cropping, preserving its aspect ratio */
+    background-color: var(--primary-bg); /* Adds a background for any letterboxing */
+    border: 3px solid var(--accent-color);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.avatar-card:hover .avatar-image {
+    transform: scale(1.05);
+}
+
+.avatar-name {
+    font-weight: bold;
+    color: var(--primary-text);
+    font-size: 1.1rem;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 1rem;
+    }
+
+    .site-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .logo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .avatar-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Adjusted for smaller screens */
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
